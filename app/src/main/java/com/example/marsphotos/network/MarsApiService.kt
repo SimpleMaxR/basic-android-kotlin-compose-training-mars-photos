@@ -20,7 +20,7 @@ import com.example.marsphotos.model.MarsPhoto
 import retrofit2.http.GET
 
 /**
- * A public interface that exposes the [getPhotos] method
+ * 暴露 [getPhotos] 方法，供 retrofit 使用
  */
 interface MarsApiService {
     /**

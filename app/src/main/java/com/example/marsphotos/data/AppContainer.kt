@@ -29,7 +29,7 @@ interface AppContainer {
 }
 
 /**
- * Implementation for the Dependency Injection container at the application level.
+ * 在应用层级实现依赖注入
  *
  * Variables are initialized lazily and the same instance is shared across the whole app.
  */
@@ -37,7 +37,7 @@ class DefaultAppContainer : AppContainer {
     private val baseUrl = "https://android-kotlin-fun-mars-server.appspot.com/"
 
     /**
-     * Use the Retrofit builder to build a retrofit object using a kotlinx.serialization converter
+     * retrofit 对象，指定了 JSON 转换器和 baseUrl
      */
     private val retrofit: Retrofit = Retrofit.Builder()
         .addConverterFactory(Json.asConverterFactory("application/json".toMediaType()))
@@ -45,7 +45,7 @@ class DefaultAppContainer : AppContainer {
         .build()
 
     /**
-     * Retrofit service object for creating api calls
+     * retrofit service 对象，指定 MarsApiService 接口
      */
     private val retrofitService: MarsApiService by lazy {
         retrofit.create(MarsApiService::class.java)
@@ -55,6 +55,6 @@ class DefaultAppContainer : AppContainer {
      * DI implementation for Mars photos repository
      */
     override val marsPhotosRepository: MarsPhotosRepository by lazy {
-        NetworkMarsPhotosRepository(retrofitService)
+        NetworkMarsPhotosRepository(retrofitService) // 将指定了接口的 retrofit service 传入给 NetworkMarsPhotosRepository
     }
 }

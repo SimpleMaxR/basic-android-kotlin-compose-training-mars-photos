@@ -43,7 +43,7 @@ sealed interface MarsUiState {
 class MarsViewModel(private val marsPhotosRepository: MarsPhotosRepository) : ViewModel() {
     /** The mutable State that stores the status of the most recent request */
     var marsUiState: MarsUiState by mutableStateOf(MarsUiState.Loading)
-        private set
+        private set // private set : 说明拥有公共的 getter 和 私有的 setter
 
     /**
      * Call getMarsPhotos() on init so we can display status immediately.
@@ -59,6 +59,7 @@ class MarsViewModel(private val marsPhotosRepository: MarsPhotosRepository) : Vi
     fun getMarsPhotos() {
         viewModelScope.launch {
             marsUiState = MarsUiState.Loading
+            // 透过仓库获取数据
             marsUiState = try {
                 val listResult = marsPhotosRepository.getMarsPhotos()
                 MarsUiState.Success(
@@ -74,10 +75,13 @@ class MarsViewModel(private val marsPhotosRepository: MarsPhotosRepository) : Vi
 
     /**
      * Factory for [MarsViewModel] that takes [MarsPhotosRepository] as a dependency
+     * 工厂模式，因为 Android 框架不允许创建时向构造函数中的 ViewModel 传递值，
      */
     companion object {
         val Factory: ViewModelProvider.Factory = viewModelFactory {
             initializer {
+                // APPLICATION_KEY 是 ViewModelProvider.AndroidViewModelFactory.Companion 对象的一部分
+                // 用于查找应用的 MarsPhotosApplication 对象，该对象具有 container 属性
                 val application = (this[APPLICATION_KEY] as MarsPhotosApplication)
                 val marsPhotosRepository = application.container.marsPhotosRepository
                 MarsViewModel(marsPhotosRepository = marsPhotosRepository)

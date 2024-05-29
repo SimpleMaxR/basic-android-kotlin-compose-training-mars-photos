@@ -20,11 +20,11 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 /**
- * This data class defines a Mars photo which includes an ID, and the image URL.
+ * 数据类，使用 @Serializable 注解来序列化, 以便使用 Retrofit 的 JSON 序列化/反序列化功能
  */
 @Serializable
 data class MarsPhoto(
     val id: String,
-    @SerialName(value = "img_src")
+    @SerialName(value = "img_src") // @SerialName 注解用于指定字段的名称
     val imgSrc: String
 )

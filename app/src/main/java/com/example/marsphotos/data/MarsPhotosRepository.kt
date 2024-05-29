@@ -19,7 +19,7 @@ import com.example.marsphotos.model.MarsPhoto
 import com.example.marsphotos.network.MarsApiService
 
 /**
- * Repository that fetch mars photos list from marsApi.
+ * Repository 接口
  */
 interface MarsPhotosRepository {
     /** Fetches list of MarsPhoto from marsApi */
@@ -27,7 +27,7 @@ interface MarsPhotosRepository {
 }
 
 /**
- * Network Implementation of Repository that fetch mars photos list from marsApi.
+ * MarsPhotoRepository 的网络实现
  */
 class NetworkMarsPhotosRepository(
     private val marsApiService: MarsApiService
